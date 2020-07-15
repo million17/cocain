@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { withStyles, Button, Typography } from '@material-ui/core';
+import { withStyles, Button } from '@material-ui/core';
 import styles from './styles';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import { STATUSES } from '../../commons/contants'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Box from '@material-ui/core/Box';
-import CardActions from '@material-ui/core/CardActions';
+import TaskList from '../../components/TaskList'
+import TaskForm from '../../components/TaskForm'
+import TextField from '@material-ui/core/TextField';
 
 const listTask = [
     {
@@ -30,44 +29,22 @@ const listTask = [
     },
 ]
 
+
 class Taskboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
     renderBoard = () => {
         let xhtml = null;
-        const { classes } = this.props;
         xhtml = (
             <Grid container spacing={2}>
-                {STATUSES.map((status, index) => {
+                {STATUSES.map(status => {
                     const taskFiltered = listTask.filter(task => task.status === status.value)
                     return (
-                        <Grid item md={4} xs={12} key={index}>
-                            <Box m={1}>
-                                <div className={classes.status}>{status.label}</div>
-                            </Box>
-                            <div className={classes.wrapperListTask}>
-                                {taskFiltered.map(task => {
-                                    return (
-                                        <Card key={task.id} className={classes.card}>
-                                            <CardContent>
-                                                <Grid container justify="space-between">
-                                                    <Grid item md={8}>
-                                                        <Typography component="h2">
-                                                            {task.title}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item md={4}>
-                                                        {status.label}
-                                                    </Grid>
-                                                </Grid>
-                                            </CardContent>
-                                            <CardActions>
-
-                                            </CardActions>
-
-                                        </Card>
-                                    )
-                                })}
-                            </div>
-                        </Grid>
+                        <TaskList tasks={taskFiltered} status={status} key={status.value} />
                     );
                 })}
             </Grid>
@@ -75,14 +52,37 @@ class Taskboard extends Component {
         return xhtml;
     }
 
+    handleClose = () => {
+        this.setState({
+            open: false,
+        })
+    }
+
+    renderForm = () => {
+        const { open } = this.state
+        let xhtml = null;
+
+        xhtml = (
+            <TaskForm open={open} handleClose={this.handleClose} />
+        )
+
+        return xhtml;
+    }
+
+    openForm = () => {
+        this.setState({
+            open: true
+        })
+    }
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.taskBoard}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={this.openForm}>
                     <AddIcon /> Thêm công việc
                 </Button>
                 {this.renderBoard()}
+                {this.renderForm()}
             </div>
         )
     }
