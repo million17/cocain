@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import styles from './styles'
+import React, { Component } from 'react';
+import styles from './styles';
 import { withStyles, Button } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
