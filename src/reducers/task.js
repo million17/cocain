@@ -1,5 +1,5 @@
 import * as constants from './../commons/contants';
-
+import { toastError } from '../helpers/toastHelper';
 const initState = {
   listTask: [],
 };
@@ -18,6 +18,8 @@ const taskReducer = (state = initState, action) => {
         listTask: data,
       };
     case constants.FETCH_TASK_FAIL:
+      const { err } = action.payload;
+      toastError(err);
       return {
         ...state,
         listTask: [],

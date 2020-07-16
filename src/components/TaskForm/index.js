@@ -23,7 +23,7 @@ class TaskForm extends Component {
             id="standard-basic"
             label="Name"
           />
-          <TextField id="standard-basic" label="Description" />
+          <TextField id="standard-basic1" label="Description" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

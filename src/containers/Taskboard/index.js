@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles, Button } from '@material-ui/core';
+import { withStyles, Button, Box } from '@material-ui/core';
 import styles from './styles';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as taskActions from '../../actions/task';
 import { PropTypes } from 'prop-types';
+import { toast } from 'react-toastify';
 
 class Taskboard extends Component {
   constructor(props) {
@@ -63,6 +64,11 @@ class Taskboard extends Component {
       open: true,
     });
   };
+
+  showToast = () => {
+    toast.success('Success !');
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -70,6 +76,11 @@ class Taskboard extends Component {
         <Button variant="contained" color="primary" onClick={this.openForm}>
           <AddIcon /> Thêm công việc
         </Button>
+        <Box mt={1}>
+          <Button variant="contained" color="primary" onClick={this.showToast}>
+            Notify
+          </Button>
+        </Box>
         {this.renderBoard()}
         {this.renderForm()}
       </div>
