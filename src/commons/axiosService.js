@@ -2,6 +2,7 @@ import axios from 'axios';
 class AxiosService {
   constructor() {
     const instance = axios.create();
+    instance.interceptors.response.use(this.handleSuccess, this.handleError);
     this.instance = instance;
   }
 
@@ -14,7 +15,7 @@ class AxiosService {
   }
 
   get(url) {
-    return instance.get(url);
+    return this.instance.get(url);
   }
 }
 export default new AxiosService();

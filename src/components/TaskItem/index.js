@@ -9,7 +9,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 class TaskItem extends Component {
   render() {
-    const { status, task, classes, description } = this.props;
+    const { status, task, classes } = this.props;
     return (
       <Card key={task.id} className={classes.card}>
         <CardContent>

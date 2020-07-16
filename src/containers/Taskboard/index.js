@@ -6,7 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import { STATUSES } from '../../commons/contants';
 import TaskList from '../../components/TaskList';
 import TaskForm from '../../components/TaskForm';
-import TextField from '@material-ui/core/TextField';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as taskActions from '../../actions/task';
+import { PropTypes } from 'prop-types';
 
 const listTask = [
   {
@@ -36,6 +39,13 @@ class Taskboard extends Component {
       open: false,
     };
   }
+
+  componentDidMount() {
+    const { taskActionCreators } = this.props;
+    const { fetchListTask } = taskActionCreators;
+    fetchListTask();
+  }
+
   renderBoard = () => {
     let xhtml = null;
     xhtml = (
@@ -87,4 +97,21 @@ class Taskboard extends Component {
   }
 }
 
-export default withStyles(styles)(Taskboard);
+Taskboard.propTypes = {
+  classess: PropTypes.object,
+  taskActionCreators: PropTypes.shape({
+    fetchListTask: PropTypes.func,
+  }),
+};
+
+const mapStateToProps = null;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+  };
+};
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(Taskboard),
+);
