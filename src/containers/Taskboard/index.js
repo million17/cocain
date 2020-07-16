@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import styles from './styles';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
-import { STATUSES } from '../../commons/contants'
-import TaskList from '../../components/TaskList'
-import TaskForm from '../../components/TaskForm'
+import { STATUSES } from '../../commons/contants';
+import TaskList from '../../components/TaskList';
+import TaskForm from '../../components/TaskForm';
 import TextField from '@material-ui/core/TextField';
 
 const listTask = [
@@ -27,7 +27,7 @@ const listTask = [
         description: 'Read Documents Java Web for developer',
         status: 1
     },
-]
+];
 
 
 class Taskboard extends Component {
@@ -35,15 +35,14 @@ class Taskboard extends Component {
         super(props);
         this.state = {
             open: false
-        }
+        };
     }
     renderBoard = () => {
         let xhtml = null;
         xhtml = (
             <Grid container spacing={2}>
                 {STATUSES.map(status => {
-                    const taskFiltered = listTask.filter(task => task.status === status.value)
-                    return (
+                    const taskFiltered = listTask.filter(task => task.status === status.value);                    return (
                         <TaskList tasks={taskFiltered} status={status} key={status.value} />
                     );
                 })}
@@ -55,16 +54,15 @@ class Taskboard extends Component {
     handleClose = () => {
         this.setState({
             open: false,
-        })
+        });
     }
 
     renderForm = () => {
-        const { open } = this.state
-        let xhtml = null;
+        const { open } = this.state;        let xhtml = null;
 
         xhtml = (
             <TaskForm open={open} handleClose={this.handleClose} />
-        )
+        );
 
         return xhtml;
     }
@@ -72,8 +70,7 @@ class Taskboard extends Component {
     openForm = () => {
         this.setState({
             open: true
-        })
-    }
+        });    }
     render() {
         const { classes } = this.props;
         return (
@@ -84,8 +81,7 @@ class Taskboard extends Component {
                 {this.renderBoard()}
                 {this.renderForm()}
             </div>
-        )
-    }
+        );    }
 }
 
 export default withStyles(styles)(Taskboard);

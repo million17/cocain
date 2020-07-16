@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
 import Box from '@material-ui/core/Box';
 
 import styles from './styles';
@@ -19,12 +18,12 @@ class TaskList extends Component {
                     {tasks.map(task => {
                         return (
                             <TaskItem task={task} status={status} key={task.id} />
-                        )
+                        );
                     })}
                 </div>
             </Grid>
-        )
+        );
     }
 }
 
-export default withStyles(styles)(TaskList)
+export default withStyles(styles)(TaskList);

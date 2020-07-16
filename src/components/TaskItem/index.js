@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { withStyles, Typography, Fab } from '@material-ui/core';
 import styles from './styles';
 import CardActions from '@material-ui/core/CardActions';
@@ -42,8 +42,8 @@ class TaskItem extends Component {
 
                 </CardActions>
             </Card>
-        )
+        );
     }
 }
 
-export default withStyles(styles)(TaskItem)
+export default withStyles(styles)(TaskItem);
