@@ -11,27 +11,6 @@ import { connect } from 'react-redux';
 import * as taskActions from '../../actions/task';
 import { PropTypes } from 'prop-types';
 
-const listTask = [
-  {
-    id: 1,
-    title: 'Read Docs React Js',
-    description: 'Read Documents React Js fro developer',
-    status: 0,
-  },
-  {
-    id: 2,
-    title: 'Read Docs React Native',
-    description: 'Read Documents React Native for app',
-    status: 2,
-  },
-  {
-    id: 3,
-    title: 'Learn Java Web',
-    description: 'Read Documents Java Web for developer',
-    status: 1,
-  },
-];
-
 class Taskboard extends Component {
   constructor(props) {
     super(props);
@@ -42,11 +21,12 @@ class Taskboard extends Component {
 
   componentDidMount() {
     const { taskActionCreators } = this.props;
-    const { fetchListTask } = taskActionCreators;
-    fetchListTask();
+    const { fetchListTaskRequest } = taskActionCreators;
+    fetchListTaskRequest(); // Gọi xuống mapDispatchToProps
   }
 
   renderBoard = () => {
+    const { listTask } = this.props;
     let xhtml = null;
     xhtml = (
       <Grid container spacing={2}>
@@ -104,10 +84,15 @@ Taskboard.propTypes = {
   }),
 };
 
-const mapStateToProps = null;
+const mapStateToProps = (state) => {
+  return {
+    listTask: state.task.listTask,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    // Gọi xuống actions xử lý rq
     taskActionCreators: bindActionCreators(taskActions, dispatch),
   };
 };
