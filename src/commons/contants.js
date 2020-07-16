@@ -20,3 +20,9 @@ export const STATUSES = [
 export const FETCH_TASK = 'FETCH_TASK';
 export const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
 export const FETCH_TASK_FAIL = 'FETCH_TASK_FAIL';
+
+export const STATUS_CODE = {
+  SUCCESS: 200,
+  CREATED: 201,
+  UPDATE: 202,
+};

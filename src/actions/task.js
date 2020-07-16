@@ -1,4 +1,3 @@
-import * as taskApis from './../apis/task';
 import * as constants from './../commons/contants';
 
 export const fetchListTask = () => {
@@ -31,17 +30,17 @@ B2 : Reset : state task => []
 B3 : fetch listTastSuccess (data)
 */
 
-export const fetchListTaskRequest = () => {
-  return (dispatch) => {
-    dispatch(fetchListTask());
-    taskApis
-      .getList()
-      .then((resp) => {
-        const { data } = resp;
-        dispatch(fetchListTaskSuccess(data));
-      })
-      .catch((err) => {
-        dispatch(fetchListTaskFail(err));
-      });
-  };
-};
+// export const fetchListTaskRequest = () => {
+//   return (dispatch) => {
+//     dispatch(fetchListTask());
+//     taskApis
+//       .getList()
+//       .then((resp) => {
+//         const { data } = resp;
+//         dispatch(fetchListTaskSuccess(data));
+//       })
+//       .catch((err) => {
+//         dispatch(fetchListTaskFail(err));
+//       });
+//   };
+// };
