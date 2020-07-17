@@ -34,3 +34,18 @@ export const STATUS_CODE = {
  */
 export const SHOW_LOADING = 'GLOBAL_SHOW_LOADING';
 export const HIDE_LOADING = 'GLOBAL_HIDE_LOADING';
+
+/**
+ * Filter Task
+ */
+export const FILTER_TASK = 'FILTER_TASK';
+export const FILTER_TASK_SUCCESS = 'FILTER_TASK_SUCCESS';
+export const FILTER_TASK_FAIL = 'FILTER_TASK_FAIL';
+
+/**
+ * Modal
+ */
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const CHANGE_MODAL_CONTENT = 'CHANGE_MODAL_CONTENT';
+export const CHANGE_MODAL_TITLE = 'CHANGE_MODAL_TITLE';

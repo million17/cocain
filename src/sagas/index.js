@@ -1,4 +1,13 @@
-import { fork, take, call, put, delay } from 'redux-saga/effects';
+import {
+  fork,
+  take,
+  call,
+  put,
+  delay,
+  takeLatest, // Không cần vòng lặp, thay thế fork và take và vòng lặp vô tận
+  select,
+  // takeEvery Chaỵ ngay lập tức
+} from 'redux-saga/effects';
 import * as constant from './../commons/contants';
 import { showLoading, hideLoading } from './../actions/ui';
 import { getList } from './../apis/task';
@@ -27,8 +36,20 @@ function* watchFetchListTaskAction() {
   }
 }
 
+function* filterTaskSaga({ payload }) {
+  yield delay(500);
+  // const { keyword } = payload;
+  const { value } = payload.keyword;
+  const list = yield select((state) => state.task.listTask);
+  const filteredTask = list.filter((task) =>
+    task.title.trim().toLowerCase().includes(value.trim().toLowerCase()),
+  );
+  yield put(fetchListTaskSuccess(filteredTask));
+}
+
 function* rootSaga() {
   yield fork(watchFetchListTaskAction); // Theo dõi các action
+  yield takeLatest(constant.FILTER_TASK, filterTaskSaga);
 }
 
 export default rootSaga;

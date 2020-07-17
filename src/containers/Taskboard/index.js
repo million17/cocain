@@ -9,8 +9,10 @@ import TaskForm from '../../components/TaskForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as taskActions from '../../actions/task';
+import * as modalActions from '../../actions/modal';
 import { PropTypes } from 'prop-types';
 import { toast } from 'react-toastify';
+import SearchBox from '../../components/SearchBox/index';
 
 class Taskboard extends Component {
   constructor(props) {
@@ -20,11 +22,11 @@ class Taskboard extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { taskActionCreators } = this.props;
-  //   const { fetchListTask } = taskActionCreators;
-  //   fetchListTask(); // Gọi xuống mapDispatchToProps
-  // }
+  componentDidMount() {
+    const { taskActionCreators } = this.props;
+    const { fetchListTask } = taskActionCreators;
+    fetchListTask(); // Gọi xuống mapDispatchToProps
+  }
 
   loadData = () => {
     const { taskActionCreators } = this.props;
@@ -65,10 +67,24 @@ class Taskboard extends Component {
     return xhtml;
   };
 
+  renderSearchBox = () => {
+    let xhtml = null;
+    xhtml = <SearchBox handleChange={this.handleChangeFilter} />;
+    return xhtml;
+  };
+
+  handleChangeFilter = (e) => {
+    var value = e.target;
+    const { taskActionCreators } = this.props;
+    const { filterTask } = taskActionCreators;
+    filterTask(value); // Gọi xuống mapDispatchToProps
+  };
+
   openForm = () => {
-    this.setState({
-      open: true,
-    });
+    const { modalActions } = this.props;
+    const { showModal, changeModalTitle, changeModalContent } = modalActions;
+    showModal();
+    changeModalTitle('Thêm mới công việc');
   };
 
   showToast = () => {
@@ -92,6 +108,7 @@ class Taskboard extends Component {
             Notify
           </Button>
         </Box>
+        <Box mt={1}>{this.renderSearchBox()}</Box>
         {this.renderBoard()}
         {this.renderForm()}
       </div>
@@ -103,6 +120,13 @@ Taskboard.propTypes = {
   classess: PropTypes.object,
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
+    filterTask: PropTypes.func,
+  }),
+  modalActions: PropTypes.shape({
+    showModal: PropTypes.func,
+    hideModal: PropTypes.func,
+    changeModalTitle: PropTypes.func,
+    changeModalContent: PropTypes.func,
   }),
 };
 
@@ -116,6 +140,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // Gọi xuống actions xử lý rq
     taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActions: bindActionCreators(modalActions, dispatch),
   };
 };
 

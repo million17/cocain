@@ -24,6 +24,20 @@ export const fetchListTaskFail = (err) => {
   };
 };
 
+export const filterTask = (keyword) => ({
+  type: constants.FILTER_TASK,
+  payload: {
+    keyword,
+  },
+});
+
+export const filterTaskSuccess = (data) => ({
+  type: constants.FETCH_TASK_SUCCESS,
+  payload: {
+    data,
+  },
+});
+
 /*
 B1 : fectch listTaskRequest()
 B2 : Reset : state task => []

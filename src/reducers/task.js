@@ -24,6 +24,11 @@ const taskReducer = (state = initState, action) => {
         ...state,
         listTask: [],
       };
+    case constants.FILTER_TASK_SUCCESS:
+      return {
+        ...state,
+        listTask: [data],
+      };
     default:
       return state;
   }
