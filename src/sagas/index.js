@@ -1,17 +1,29 @@
-import { fork, take, call } from 'redux-saga/effects';
+import { fork, take, call, put, delay } from 'redux-saga/effects';
 import * as constant from './../commons/contants';
-
+import { showLoading, hideLoading } from './../actions/ui';
 import { getList } from './../apis/task';
-
+import { fetchListTaskSuccess, fetchListTaskFail } from '../actions/task';
+/**
+ * B1 : thực thi actions fetch task
+ * B2 : gọi API, hiển thị loading
+ * B3 : Kiểm tra status code
+ * -- Nếu thành công
+ * -- Nếu thất bại
+ * B4 : Thực thi công việc tiếp theo
+ */
 function* watchFetchListTaskAction() {
-  yield take(constant.FETCH_TASK);
-
-  const resp = yield call(getList);
-  const { status, data } = resp;
-  if (status === constant.STATUS_CODE.SUCCESS) {
-    console.log(data);
-  } else {
-    console.log(status);
+  while (true) {
+    yield take(constant.FETCH_TASK);
+    yield put(showLoading());
+    const resp = yield call(getList);
+    const { status, data } = resp;
+    if (status === constant.STATUS_CODE.SUCCESS) {
+      yield put(fetchListTaskSuccess(data));
+    } else {
+      yield put(fetchListTaskFail(data));
+    }
+    yield delay(1000);
+    yield put(hideLoading());
   }
 }
 

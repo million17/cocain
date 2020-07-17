@@ -20,11 +20,17 @@ class Taskboard extends Component {
     };
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   const { taskActionCreators } = this.props;
+  //   const { fetchListTask } = taskActionCreators;
+  //   fetchListTask(); // Gọi xuống mapDispatchToProps
+  // }
+
+  loadData = () => {
     const { taskActionCreators } = this.props;
     const { fetchListTask } = taskActionCreators;
     fetchListTask(); // Gọi xuống mapDispatchToProps
-  }
+  };
 
   renderBoard = () => {
     const { listTask } = this.props;
@@ -73,6 +79,11 @@ class Taskboard extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.taskBoard}>
+        <Box mb={1}>
+          <Button variant="contained" color="primary" onClick={this.loadData}>
+            <AddIcon /> Load Data
+          </Button>
+        </Box>
         <Button variant="contained" color="primary" onClick={this.openForm}>
           <AddIcon /> Thêm công việc
         </Button>
