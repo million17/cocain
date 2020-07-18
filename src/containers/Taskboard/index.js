@@ -5,12 +5,12 @@ import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import { STATUSES } from '../../commons/contants';
 import TaskList from '../../components/TaskList';
-import TaskForm from '../../components/TaskForm';
+import TaskForm from '../TaskForm';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as taskActions from '../../actions/task';
 import * as modalActions from '../../actions/modal';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import SearchBox from '../../components/SearchBox/index';
 
@@ -58,14 +58,14 @@ class Taskboard extends Component {
     });
   };
 
-  renderForm = () => {
-    const { open } = this.state;
-    let xhtml = null;
-
-    xhtml = <TaskForm open={open} handleClose={this.handleClose} />;
-
-    return xhtml;
-  };
+  // renderForm = () => {
+  //   const {open} = this.state;
+  //   let xhtml = null;
+  //
+  //   xhtml = <TaskForm open={open} handleClose={this.handleClose}/>;
+  //
+  //   return xhtml;
+  // };
 
   renderSearchBox = () => {
     let xhtml = null;
@@ -81,10 +81,15 @@ class Taskboard extends Component {
   };
 
   openForm = () => {
-    const { modalActions } = this.props;
-    const { showModal, changeModalTitle, changeModalContent } = modalActions;
+    const { modalActionCreators } = this.props;
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreators;
     showModal();
     changeModalTitle('Thêm mới công việc');
+    changeModalContent(<TaskForm />);
   };
 
   showToast = () => {
@@ -110,19 +115,19 @@ class Taskboard extends Component {
         </Box>
         <Box mt={1}>{this.renderSearchBox()}</Box>
         {this.renderBoard()}
-        {this.renderForm()}
+        {/*{this.renderForm()}*/}
       </div>
     );
   }
 }
 
 Taskboard.propTypes = {
-  classess: PropTypes.object,
+  classes: PropTypes.object,
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
     filterTask: PropTypes.func,
   }),
-  modalActions: PropTypes.shape({
+  modalActionCreators: PropTypes.shape({
     showModal: PropTypes.func,
     hideModal: PropTypes.func,
     changeModalTitle: PropTypes.func,
@@ -140,7 +145,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // Gọi xuống actions xử lý rq
     taskActionCreators: bindActionCreators(taskActions, dispatch),
-    modalActions: bindActionCreators(modalActions, dispatch),
+    modalActionCreators: bindActionCreators(modalActions, dispatch),
   };
 };
 

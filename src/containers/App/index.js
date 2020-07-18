@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Taskboard from '../Taskboard/index';
+import CommonModal from '../../components/Modal/index';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import { Provider } from 'react-redux';
@@ -17,6 +18,7 @@ class App extends Component {
         <Taskboard />
         <ToastContainer />
         <GlobalLoading />
+        <CommonModal />
       </Provider>
     );
   }
