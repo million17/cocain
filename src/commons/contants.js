@@ -49,3 +49,15 @@ export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
 export const CHANGE_MODAL_CONTENT = 'CHANGE_MODAL_CONTENT';
 export const CHANGE_MODAL_TITLE = 'CHANGE_MODAL_TITLE';
+
+/**
+ * Task
+ */
+export const ADD_TASK = 'ADD_TASK';
+export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
+export const ADD_TASK_FAIL = 'ADD_TASK_FAIL';
+
+/**
+ * Edit Task
+ */
+export const SET_TASK_EDITING = 'SET_TASK_EDITING';

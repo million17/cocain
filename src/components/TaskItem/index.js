@@ -7,11 +7,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PropTypes from 'prop-types';
+
 class TaskItem extends Component {
   render() {
-    const { status, task, classes } = this.props;
+    const { status, task, classes, onClickEdit } = this.props;
     return (
-      <Card key={task.id} className={classes.card}>
+      <Card key={task.id} className={classes.card} style={{ marginTop: 20 }}>
         <CardContent>
           <Grid container justify="space-between">
             <Grid item md={8}>
@@ -24,7 +26,12 @@ class TaskItem extends Component {
           <p>{task.description}</p>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Fab size="small" color="primary" aria-label="Edit">
+          <Fab
+            size="small"
+            color="primary"
+            aria-label="Edit"
+            onClick={onClickEdit}
+          >
             <EditIcon fontSize="small" />
           </Fab>
           <Fab size="small" color="primary" aria-label="Delete">
@@ -35,5 +42,11 @@ class TaskItem extends Component {
     );
   }
 }
+
+TaskItem.propTypes = {
+  classes: PropTypes.object,
+  task: PropTypes.object,
+  status: PropTypes.object,
+};
 
 export default withStyles(styles)(TaskItem);

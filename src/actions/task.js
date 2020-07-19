@@ -1,8 +1,11 @@
 import * as constants from './../commons/contants';
 
-export const fetchListTask = () => {
+export const fetchListTask = (params = {}) => {
   return {
     type: constants.FETCH_TASK,
+    payload: {
+      params,
+    },
   };
 };
 
@@ -20,6 +23,43 @@ export const fetchListTaskFail = (err) => {
     type: constants.FETCH_TASK_FAIL,
     payload: {
       err,
+    },
+  };
+};
+
+export const addTask = (title, description) => {
+  return {
+    type: constants.ADD_TASK,
+    payload: {
+      title,
+      description,
+    },
+  };
+};
+
+export const addTaskSuccess = (data) => {
+  return {
+    type: constants.ADD_TASK_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};
+
+export const addTaskFail = (error) => {
+  return {
+    type: constants.ADD_TASK_FAIL,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const setTaskEditing = (task) => {
+  return {
+    type: constants.SET_TASK_EDITING,
+    payload: {
+      task,
     },
   };
 };
@@ -43,18 +83,3 @@ B1 : fectch listTaskRequest()
 B2 : Reset : state task => []
 B3 : fetch listTastSuccess (data)
 */
-
-// export const fetchListTaskRequest = () => {
-//   return (dispatch) => {
-//     dispatch(fetchListTask());
-//     taskApis
-//       .getList()
-//       .then((resp) => {
-//         const { data } = resp;
-//         dispatch(fetchListTaskSuccess(data));
-//       })
-//       .catch((err) => {
-//         dispatch(fetchListTaskFail(err));
-//       });
-//   };
-// };

@@ -34,6 +34,28 @@ class Taskboard extends Component {
     fetchListTask(); // Gọi xuống mapDispatchToProps
   };
 
+  handleChangeFilter = (e) => {
+    const value = e.target;
+    const { taskActionCreators } = this.props;
+    const { filterTask } = taskActionCreators;
+    filterTask(value); // Gọi xuống mapDispatchToProps
+  };
+
+  handleEditTask = (task) => {
+    console.log(task);
+    const { taskActionCreators, modalActionCreators } = this.props;
+    const {
+      showModal,
+      changeModalTitle,
+      changeModalContent,
+    } = modalActionCreators;
+    const { setTaskEditing } = taskActionCreators;
+    setTaskEditing(task);
+    showModal();
+    changeModalTitle('Cập nhật công việc');
+    changeModalContent(<TaskForm />);
+  };
+
   renderBoard = () => {
     const { listTask } = this.props;
     let xhtml = null;
@@ -44,7 +66,12 @@ class Taskboard extends Component {
             (task) => task.status === status.value,
           );
           return (
-            <TaskList tasks={taskFiltered} status={status} key={status.value} />
+            <TaskList
+              tasks={taskFiltered}
+              status={status}
+              key={status.value}
+              onClickEdit={this.handleEditTask}
+            />
           );
         })}
       </Grid>
@@ -52,44 +79,24 @@ class Taskboard extends Component {
     return xhtml;
   };
 
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
-  // renderForm = () => {
-  //   const {open} = this.state;
-  //   let xhtml = null;
-  //
-  //   xhtml = <TaskForm open={open} handleClose={this.handleClose}/>;
-  //
-  //   return xhtml;
-  // };
-
   renderSearchBox = () => {
     let xhtml = null;
     xhtml = <SearchBox handleChange={this.handleChangeFilter} />;
     return xhtml;
   };
 
-  handleChangeFilter = (e) => {
-    var value = e.target;
-    const { taskActionCreators } = this.props;
-    const { filterTask } = taskActionCreators;
-    filterTask(value); // Gọi xuống mapDispatchToProps
-  };
-
   openForm = () => {
-    const { modalActionCreators } = this.props;
+    const { modalActionCreators, taskActionCreators } = this.props;
     const {
       showModal,
       changeModalTitle,
       changeModalContent,
     } = modalActionCreators;
+    const { setTaskEditing } = taskActionCreators;
     showModal();
     changeModalTitle('Thêm mới công việc');
     changeModalContent(<TaskForm />);
+    setTaskEditing(null);
   };
 
   showToast = () => {
@@ -115,7 +122,6 @@ class Taskboard extends Component {
         </Box>
         <Box mt={1}>{this.renderSearchBox()}</Box>
         {this.renderBoard()}
-        {/*{this.renderForm()}*/}
       </div>
     );
   }
@@ -126,6 +132,7 @@ Taskboard.propTypes = {
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
     filterTask: PropTypes.func,
+    setTaskEditing: PropTypes.func,
   }),
   modalActionCreators: PropTypes.shape({
     showModal: PropTypes.func,
